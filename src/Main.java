@@ -14,14 +14,13 @@ public class Main {
         EntityFilter filter = new EntityFilter(true, true, false);
 
         // Set the binary OSM source file
-        Osmonaut naut = new Osmonaut("data/osm/poland-latest.osm.pbf", filter);
+        Osmonaut naut = new Osmonaut("/tmp/osm/poland-latest.osm.pbf", filter);
 
         // Start scanning by implementing the interface
         naut.scan(new IOsmonautReceiver() {
             @Override
             public boolean needsEntity(EntityType type, Tags tags) {
-                // Only lakes with names
-//                return (tags.hasKeyValue("natural", "water") && tags.hasKey("name"));
+                // key, key_value
                 return (tags.hasKeyValue("amenity", "charging_station") && tags.hasKey("name"));
             }
 
