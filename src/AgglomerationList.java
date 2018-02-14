@@ -23,13 +23,13 @@ public interface AgglomerationList {
     String KIELCE = "Kielce";
     String RZESZOW = "Rzeszów";
     String RADOM = "Radom";
-    String OPOLE = "Oplole";
+    String OPOLE = "Opole";
     String TARNOW = "Tarnów";
     String WALBRZYCH = "Wałbrzych";
     String OLSZTYN = "Olsztyn";
     String PLOCK = "Płock";
     String ZIELONA_GORA = "Zielona Góra";
-    String GORZOW = "Gorzów";
+    String GORZOW = "Gorzów Wielkopolski";
     String KOSZALIN = "Koszalin";
     String KONIN = "Konin";
     String KALISZ = "Kalisz";

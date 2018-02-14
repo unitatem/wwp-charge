@@ -6,6 +6,7 @@ public class Agglomerations {
     public int totalPopulation;
 
     Agglomerations() {
+        cities = new ArrayList<>();
         setCities();
 
         totalPopulation = 0;
