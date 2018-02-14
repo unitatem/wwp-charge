@@ -1,3 +1,5 @@
+package wwp;
+
 /*
 ref: https://pl.wikipedia.org/wiki/Aglomeracje_w_Polsce
 ref: https://pl.wikipedia.org/wiki/Bydgoszcz
@@ -9,7 +11,7 @@ public interface AgglomerationList {
     String WARSAW = "Warszawa";
     String CRACOW = "Kraków";
     String LODZ = "Łódź";
-    String TROJMIASTO = "Trójmiasto";
+    String TROJMIASTO = "Trójmiasto";   // https://pl.wikipedia.org/wiki/Tr%C3%B3jmiasto
     String POZNAN = "Poznań";
     String WROCLAW = "Wrocław";
     String BYDGOSZCZ = "Bydgoszcz";

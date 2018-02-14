@@ -1,3 +1,6 @@
+package wwp;
+
+import extractor.AgglomerationsExtractor;
 import net.morbz.osmonaut.EntityFilter;
 import net.morbz.osmonaut.Osmonaut;
 
@@ -6,14 +9,13 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("START");
 
-        // Set which OSM entities should be scanned (only nodes and ways in this case)
+        // Set which wwp.OSM entities should be scanned (only nodes and ways in this case)
         EntityFilter generalFilter = new EntityFilter(true, true, false);
-        // Set the binary OSM source file
+        // Set the binary wwp.OSM source file
         Osmonaut naut = new Osmonaut("/tmp/osm/poland-latest.osm.pbf", generalFilter);
 
         Agglomerations agglomerations = new Agglomerations();
         AgglomerationsExtractor agglomerationsExtractor = new AgglomerationsExtractor(naut, agglomerations);
-
 
 
 

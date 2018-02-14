@@ -1,3 +1,5 @@
+package wwp;
+
 import net.morbz.osmonaut.osm.Entity;
 
 public class City {

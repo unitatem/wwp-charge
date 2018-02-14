@@ -1,3 +1,5 @@
+package wwp;
+
 // ref: http://akademia.icm.edu.pl/wp-content/uploads/sites/2/2018/02/Zalacznik-1-WWP_II_v3.pdf
 
 public interface OSM {

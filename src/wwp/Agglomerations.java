@@ -1,3 +1,5 @@
+package wwp;
+
 import java.util.ArrayList;
 
 public class Agglomerations {
@@ -5,7 +7,7 @@ public class Agglomerations {
     public ArrayList<City> cities;
     public int totalPopulation;
 
-    Agglomerations() {
+    public Agglomerations() {
         cities = new ArrayList<>();
         setCities();
 

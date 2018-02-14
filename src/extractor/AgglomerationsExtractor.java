@@ -1,8 +1,13 @@
+package extractor;
+
 import net.morbz.osmonaut.IOsmonautReceiver;
 import net.morbz.osmonaut.Osmonaut;
 import net.morbz.osmonaut.osm.Entity;
 import net.morbz.osmonaut.osm.EntityType;
 import net.morbz.osmonaut.osm.Tags;
+import wwp.Agglomerations;
+import wwp.City;
+import wwp.OSM;
 
 import java.util.Objects;
 
@@ -11,7 +16,7 @@ public class AgglomerationsExtractor {
     private Osmonaut naut;
     private Agglomerations agglomerations;
 
-    AgglomerationsExtractor(Osmonaut naut_, Agglomerations agglomerations_) {
+    public AgglomerationsExtractor(Osmonaut naut_, Agglomerations agglomerations_) {
         naut = naut_;
         agglomerations = agglomerations_;
 
@@ -33,7 +38,7 @@ public class AgglomerationsExtractor {
                 for (City city : agglomerations.cities)
                     if (Objects.equals(name, city.name)) {
                         city.setEntity(entity);
-                        System.out.println("AgglomerationsExtractor => Found: " + name);
+                        System.out.println("extractor.AgglomerationsExtractor => Found: " + name);
                     }
             }
         });
@@ -42,7 +47,7 @@ public class AgglomerationsExtractor {
     private void checkAfterScan() {
         for (City city : agglomerations.cities) {
             if (city.entity == null)
-                System.out.println("ERROR AgglomerationsExtractor => Not found: " + city.name);
+                System.out.println("ERROR extractor.AgglomerationsExtractor => Not found: " + city.name);
         }
     }
 }
