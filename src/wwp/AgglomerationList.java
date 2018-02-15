@@ -44,6 +44,8 @@ public enum AgglomerationList {
         name = name_;
     }
 
+    public static final int size = AgglomerationList.values().length;
+
     public String getName() {
         return name;
     }
