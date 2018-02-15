@@ -10,16 +10,17 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("START");
 
-        // Set which OSM entities should be scanned (only nodes and ways in this case)
-        EntityFilter generalFilter = new EntityFilter(true, true, false);
-        // Set the binary OSM source file
-        Osmonaut naut = new Osmonaut("/tmp/osm/poland-latest.osm.pbf", generalFilter);
-
         Agglomerations agglomerations = new Agglomerations();
-        AgglomerationsExtractor agglomerationsExtractor = new AgglomerationsExtractor(naut, agglomerations);
+        AgglomerationsExtractor agglomerationsExtractor = new AgglomerationsExtractor(agglomerations);
 
         LocationsKeeper locationsKeeper = new LocationsKeeper();
-        LocationsExtractor locationsExtractor = new LocationsExtractor(naut, agglomerations, locationsKeeper);
+        LocationsExtractor locationsExtractor = null;
+//        for (AgglomerationList city : AgglomerationList.values())
+//            locationsExtractor = new LocationsExtractor(locationsKeeper, city);
+        locationsExtractor = new LocationsExtractor(locationsKeeper, AgglomerationList.KATOWICE);
+        locationsExtractor = new LocationsExtractor(locationsKeeper, AgglomerationList.WARSAW);
+        locationsExtractor = new LocationsExtractor(locationsKeeper, AgglomerationList.CRACOW);
+        locationsExtractor = new LocationsExtractor(locationsKeeper, AgglomerationList.LODZ);
 
 
 //        // Start scanning by implementing the interface

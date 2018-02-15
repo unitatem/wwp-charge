@@ -10,7 +10,7 @@ public class City {
     public Entity entity;
 
     public City(AgglomerationList name_, int population_) {
-        name = name_.getName();
+        name = name_.getCityName();
         population = population_;
     }
 
