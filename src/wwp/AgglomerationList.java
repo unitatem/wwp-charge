@@ -7,46 +7,51 @@ ref: https://pl.wikipedia.org/wiki/Toru%C5%84
 package wwp;
 
 public enum AgglomerationList {
-    KATOWICE("Katowice"),
-    WARSAW("Warszawa"),
-    CRACOW("Kraków"),
-    LODZ("Łódź"),
-    TROJMIASTO("Trójmiasto"),   // TODO https://pl.wikipedia.org/wiki/Tr%C3%B3jmiasto
-    POZNAN("Poznań"),
-    WROCLAW("Wrocław"),
-    BYDGOSZCZ("Bydgoszcz"),
-    TORUN("Toruń"),
-    SZCZECIN("Szczecin"),
-    BIELSKO_BIALA("Bielsko-Biała"),
-    RYBNIK("Rybnik"),
-    LUBLIN("Lublin"),
-    BIALYSTOK("Białystok"),
-    CZESTOCHOWA("Częstochowa"),
-    KIELCE("Kielce"),
-    RZESZOW("Rzeszów"),
-    RADOM("Radom"),
-    OPOLE("Opole"),
-    TARNOW("Tarnów"),
-    WALBRZYCH("Wałbrzych"),
-    OLSZTYN("Olsztyn"),
-    PLOCK("Płock"),
-    ZIELONA_GORA("Zielona Góra"),
-    GORZOW("Gorzów Wielkopolski"),
-    KOSZALIN("Koszalin"),
-    KONIN("Konin"),
-    KALISZ("Kalisz"),
-    NOWY_SACZ("Nowy Sącz"),
-    NOPE("nope");
+    KATOWICE("Katowice", "katowice"),
+    WARSAW("Warszawa", "warszawa"),
+    CRACOW("Kraków", "krakow"),
+    LODZ("Łódź", "lodz"),
+    TROJMIASTO("Trójmiasto", "trojmiasto"),   // TODO https://pl.wikipedia.org/wiki/Tr%C3%B3jmiasto
+    POZNAN("Poznań", "poznan"),
+    WROCLAW("Wrocław", "wroclaw"),
+    BYDGOSZCZ("Bydgoszcz", "bydgoszcz"),
+    TORUN("Toruń", "torun"),
+    SZCZECIN("Szczecin", "szczecin"),
+    BIELSKO_BIALA("Bielsko-Biała", "bielsko_biala"),
+    RYBNIK("Rybnik", "rybnik"),
+    LUBLIN("Lublin", "lublin"),
+    BIALYSTOK("Białystok", "bialystok"),
+    CZESTOCHOWA("Częstochowa", "czestochowa"),
+    KIELCE("Kielce", "kielce"),
+    RZESZOW("Rzeszów", "rzeszow"),
+    RADOM("Radom", "radom"),
+    OPOLE("Opole", "opole"),
+    TARNOW("Tarnów", "tarnow"),
+    WALBRZYCH("Wałbrzych", "walbrzych"),
+    OLSZTYN("Olsztyn", "olsztyn"),
+    PLOCK("Płock", "plock"),
+    ZIELONA_GORA("Zielona Góra", "zielona_gora"),
+    GORZOW("Gorzów Wielkopolski", "gorzow_wielkopolski"),
+    KOSZALIN("Koszalin", "koszalin"),
+    KONIN("Konin", "konin"),
+    KALISZ("Kalisz", "kalisz"),
+    NOWY_SACZ("Nowy Sącz", "nowy_sacz");
 
-    private final String name;
+    private final String cityName;
+    private final String fileName;
 
-    AgglomerationList(String name_) {
-        name = name_;
+    AgglomerationList(String cityName_, String fileName_) {
+        cityName = cityName_;
+        fileName = fileName_;
     }
 
     public static final int size = AgglomerationList.values().length;
 
-    public String getName() {
-        return name;
+    public String getCityName() {
+        return cityName;
+    }
+
+    public String getFileName() {
+        return fileName;
     }
 }

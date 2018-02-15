@@ -1,5 +1,6 @@
 package extractor;
 
+import net.morbz.osmonaut.EntityFilter;
 import net.morbz.osmonaut.IOsmonautReceiver;
 import net.morbz.osmonaut.Osmonaut;
 import net.morbz.osmonaut.osm.Entity;
@@ -9,14 +10,18 @@ import wwp.*;
 
 public class LocationsExtractor {
 
-    private Osmonaut naut;
-    private Agglomerations agglomerations;
     private LocationsKeeper keeper;
+    private AgglomerationList city;
+    private Osmonaut naut;
 
-    public LocationsExtractor(Osmonaut naut_, Agglomerations agglomerations_, LocationsKeeper keeper_) {
-        naut = naut_;
-        agglomerations = agglomerations_;
+    public LocationsExtractor(LocationsKeeper keeper_, AgglomerationList city_) {
         keeper = keeper_;
+        city = city_;
+
+        // Set which OSM entities should be scanned (only nodes and ways in this case)
+        EntityFilter generalFilter = new EntityFilter(true, true, false);
+        // Set the binary OSM source file
+        naut = new Osmonaut("/tmp/osm/" + city.getFileName() + ".pbf", generalFilter);
 
         doScan();
     }
@@ -38,43 +43,14 @@ public class LocationsExtractor {
                 String address = generateAddress(entity);
                 Location location = new Location(address, entity);
                 // assign location to city
-                String city = generateCity(entity);
-                keeper.addLocation(city, location);
+                keeper.addLocation(city.getCityName(), location);
 
-                System.out.println(city + " " + address);
+                System.out.println(city.getCityName() + " " + address);
             }
         });
     }
 
-    private String generateCity(Entity entity) {
-        // get city of location
-        String city = entity.getTags().get(OSM.ADDRESS_CITY);
-        if (city == null) {
-            // bounding box for every city
-            for (City c : agglomerations.cities) {
-                if (c.entity == null)
-                    continue;
-
-                boolean contains = c.entity.getBounds().contains(entity.getCenter());
-                if (contains) {
-                    System.out.println("HIT");
-                    return c.name;
-                }
-            }
-
-            return AgglomerationList.NOPE.getName();
-        }
-
-        // if city is not a point of interest (country side)
-        if (agglomerations.citiesLookUp.get(city) == null)
-                return AgglomerationList.NOPE.getName();
-
-        // location belong to valid agglomeration
-        return city;
-    }
-
     private String generateAddress(Entity entity) {
-        // TODO extract exact address
         return "" + entity.getCenter();
     }
 }

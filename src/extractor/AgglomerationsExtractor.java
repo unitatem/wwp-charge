@@ -1,5 +1,6 @@
 package extractor;
 
+import net.morbz.osmonaut.EntityFilter;
 import net.morbz.osmonaut.IOsmonautReceiver;
 import net.morbz.osmonaut.Osmonaut;
 import net.morbz.osmonaut.osm.Entity;
@@ -16,8 +17,11 @@ public class AgglomerationsExtractor {
     private Osmonaut naut;
     private Agglomerations agglomerations;
 
-    public AgglomerationsExtractor(Osmonaut naut_, Agglomerations agglomerations_) {
-        naut = naut_;
+    public AgglomerationsExtractor(Agglomerations agglomerations_) {
+        // Set which OSM entities should be scanned (only nodes and ways in this case)
+        EntityFilter generalFilter = new EntityFilter(true, true, false);
+        // Set the binary OSM source file
+        naut = new Osmonaut("/tmp/osm/poland-latest.osm.pbf", generalFilter);
         agglomerations = agglomerations_;
 
         doScan();
@@ -35,11 +39,11 @@ public class AgglomerationsExtractor {
             @Override
             public void foundEntity(Entity entity) {
                 String name = entity.getTags().get(OSM.NAME);
-                for (City city : agglomerations.cities) // TODO change to hashmap
-                    if (Objects.equals(name, city.name)) {
-                        city.setEntity(entity);
-//                        System.out.println("extractor.AgglomerationsExtractor => Found: " + name);
-                    }
+                City city = agglomerations.citiesLookUp.get(name);
+                if (city != null && Objects.equals(name, city.name)) {
+                    city.setEntity(entity);
+//                    System.out.println("extractor.AgglomerationsExtractor => Found: " + name);
+                }
             }
         });
     }
