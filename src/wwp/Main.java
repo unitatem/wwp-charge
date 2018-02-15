@@ -4,6 +4,8 @@ import extractor.AgglomerationsExtractor;
 import extractor.LocationsExtractor;
 import net.morbz.osmonaut.EntityFilter;
 import net.morbz.osmonaut.Osmonaut;
+import solver.Test;
+import wwp.LocationsKeeper;
 
 public class Main {
 
@@ -20,7 +22,6 @@ public class Main {
 
         LocationsKeeper locationsKeeper = new LocationsKeeper();
         LocationsExtractor locationsExtractor = new LocationsExtractor(naut, agglomerations, locationsKeeper);
-
 
 //        // Start scanning by implementing the interface
 //        naut.scan(new IOsmonautReceiver() {
