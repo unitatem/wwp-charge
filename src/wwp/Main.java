@@ -1,27 +1,31 @@
 package wwp;
 
 import extractor.AgglomerationsExtractor;
-import extractor.LocationsExtractor;
-import net.morbz.osmonaut.EntityFilter;
-import net.morbz.osmonaut.Osmonaut;
+import extractor.CountryLocationsExtractor;
 import solver.Test;
+
+import java.util.ArrayList;
 
 public class Main {
 
     public static void main(String[] args) {
         System.out.println("START");
 
-//        Agglomerations agglomerations = new Agglomerations();
-//        AgglomerationsExtractor agglomerationsExtractor = new AgglomerationsExtractor(agglomerations);
-
+        Agglomerations agglomerations = new Agglomerations();
         LocationsKeeper locationsKeeper = new LocationsKeeper();
-        LocationsExtractor locationsExtractor = null;
+
+        AgglomerationsExtractor agglomerationsExtractor;
 //        for (AgglomerationList city : AgglomerationList.values())
-//            locationsExtractor = new LocationsExtractor(locationsKeeper, city);
-        locationsExtractor = new LocationsExtractor(locationsKeeper, AgglomerationList.KATOWICE);
-        locationsExtractor = new LocationsExtractor(locationsKeeper, AgglomerationList.WARSAW);
-        locationsExtractor = new LocationsExtractor(locationsKeeper, AgglomerationList.CRACOW);
-        locationsExtractor = new LocationsExtractor(locationsKeeper, AgglomerationList.LODZ);
+//            agglomerationsExtractor = new AgglomerationsExtractor(city, agglomerations, locationsKeeper);
+//        agglomerationsExtractor = new AgglomerationsExtractor(AgglomerationList.KATOWICE, agglomerations, locationsKeeper);
+        agglomerationsExtractor = new AgglomerationsExtractor(AgglomerationList.WARSAW, agglomerations, locationsKeeper);
+//        agglomerationsExtractor = new AgglomerationsExtractor(AgglomerationList.LODZ, agglomerations, locationsKeeper);
+//        agglomerationsExtractor = new AgglomerationsExtractor(AgglomerationList.CRACOW, agglomerations, locationsKeeper);
+
+        agglomerationsExtractor.checkAfterCitiesScan();
+
+        ArrayList<Location> countryLocations = new ArrayList<>();
+        CountryLocationsExtractor countryLocationsExtractor = new CountryLocationsExtractor(locationsKeeper, countryLocations);
 
         Test test = new Test(locationsKeeper);
         AgglomerationList.getAt(1);
