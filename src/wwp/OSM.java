@@ -4,6 +4,9 @@ package wwp;
 
 public interface OSM {
     String NAME = "name";
+    String ADDRESS_CITY = "addr:city";
+    String ADDRESS_STREET = "addr:street";
+    String ADDRESS_HOUSENUMBER = "addr:housenumber";
 
     String PLACE = "place";
     String CITY = "city";

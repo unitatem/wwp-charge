@@ -1,10 +1,12 @@
 package wwp;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Agglomerations {
 
     public ArrayList<City> cities;
+    public HashMap<String, City> citiesLookUp;
     public int totalPopulation;
 
     public Agglomerations() {
@@ -17,6 +19,9 @@ public class Agglomerations {
 
         for(City city : cities)
             city.setShare((double)city.population / totalPopulation);
+
+        citiesLookUp = new HashMap<>();
+        setCitiesLookUp();
     }
 
     private void setCities() {
@@ -49,5 +54,10 @@ public class Agglomerations {
         cities.add(new City(AgglomerationList.KONIN, 143305));
         cities.add(new City(AgglomerationList.KALISZ, 409307));
         cities.add(new City(AgglomerationList.NOWY_SACZ, 158620));
+    }
+
+    private void setCitiesLookUp() {
+        for (City city : cities)
+            citiesLookUp.put(city.name, city);
     }
 }

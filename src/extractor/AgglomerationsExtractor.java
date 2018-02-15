@@ -35,10 +35,10 @@ public class AgglomerationsExtractor {
             @Override
             public void foundEntity(Entity entity) {
                 String name = entity.getTags().get(OSM.NAME);
-                for (City city : agglomerations.cities)
+                for (City city : agglomerations.cities) // TODO change to hashmap
                     if (Objects.equals(name, city.name)) {
                         city.setEntity(entity);
-                        System.out.println("extractor.AgglomerationsExtractor => Found: " + name);
+//                        System.out.println("extractor.AgglomerationsExtractor => Found: " + name);
                     }
             }
         });

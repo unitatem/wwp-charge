@@ -11,7 +11,7 @@ public interface AgglomerationList {
     String WARSAW = "Warszawa";
     String CRACOW = "Kraków";
     String LODZ = "Łódź";
-    String TROJMIASTO = "Trójmiasto";   // https://pl.wikipedia.org/wiki/Tr%C3%B3jmiasto
+    String TROJMIASTO = "Trójmiasto";   // TODO https://pl.wikipedia.org/wiki/Tr%C3%B3jmiasto
     String POZNAN = "Poznań";
     String WROCLAW = "Wrocław";
     String BYDGOSZCZ = "Bydgoszcz";
@@ -36,4 +36,6 @@ public interface AgglomerationList {
     String KONIN = "Konin";
     String KALISZ = "Kalisz";
     String NOWY_SACZ = "Nowy Sącz";
+
+    String NOPE = "nope";
 }
