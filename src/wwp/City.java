@@ -1,8 +1,6 @@
 package wwp;
 
-import net.morbz.osmonaut.geometry.Bounds;
 import net.morbz.osmonaut.osm.Entity;
-import net.morbz.osmonaut.osm.LatLon;
 
 public class City {
 
@@ -11,8 +9,8 @@ public class City {
     public double share;
     public Entity entity;
 
-    public City(String name_, int population_) {
-        name = name_;
+    public City(AgglomerationList name_, int population_) {
+        name = name_.getName();
         population = population_;
     }
 
