@@ -1,6 +1,8 @@
 package wwp;
 
+import net.morbz.osmonaut.geometry.Bounds;
 import net.morbz.osmonaut.osm.Entity;
+import net.morbz.osmonaut.osm.LatLon;
 
 public class City {
 

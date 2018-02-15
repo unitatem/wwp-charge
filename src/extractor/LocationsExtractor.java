@@ -51,7 +51,17 @@ public class LocationsExtractor {
         String city = entity.getTags().get(OSM.ADDRESS_CITY);
         if (city == null) {
             // bounding box for every city
-            // TODO implement bounding box
+            for (City c : agglomerations.cities) {
+                if (c.entity == null)
+                    continue;
+
+                boolean contains = c.entity.getBounds().contains(entity.getCenter());
+                if (contains) {
+                    System.out.println("HIT");
+                    return c.name;
+                }
+            }
+
             return AgglomerationList.NOPE;
         }
 
