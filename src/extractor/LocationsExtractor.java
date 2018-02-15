@@ -62,12 +62,12 @@ public class LocationsExtractor {
                 }
             }
 
-            return AgglomerationList.NOPE;
+            return AgglomerationList.NOPE.getName();
         }
 
         // if city is not a point of interest (country side)
         if (agglomerations.citiesLookUp.get(city) == null)
-                return AgglomerationList.NOPE;
+                return AgglomerationList.NOPE.getName();
 
         // location belong to valid agglomeration
         return city;
