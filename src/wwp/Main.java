@@ -1,10 +1,6 @@
 package wwp;
 
-import extractor.AgglomerationsExtractor;
 import extractor.LocationsExtractor;
-import net.morbz.osmonaut.EntityFilter;
-import net.morbz.osmonaut.Osmonaut;
-import solver.Test;
 
 public class Main {
 
@@ -23,9 +19,10 @@ public class Main {
         locationsExtractor = new LocationsExtractor(locationsKeeper, AgglomerationList.CRACOW);
         locationsExtractor = new LocationsExtractor(locationsKeeper, AgglomerationList.LODZ);
 
-        Test test = new Test(locationsKeeper);
-        AgglomerationList.getAt(1);
-
+        //Test test = new Test(locationsKeeper);
+        //Agglomerations agglomerations;
+        //agglomerations.totalChargers = 6000;
+        System.out.println(AgglomerationList.getAt(1));
 
 //        // Start scanning by implementing the interface
 //        naut.scan(new IOsmonautReceiver() {
