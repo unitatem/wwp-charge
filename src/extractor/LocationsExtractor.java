@@ -18,6 +18,8 @@ public class LocationsExtractor {
         keeper = keeper_;
         city = city_;
 
+        System.out.println(city.getCityName());
+
         // Set which OSM entities should be scanned (only nodes and ways in this case)
         EntityFilter generalFilter = new EntityFilter(true, true, false);
         // Set the binary OSM source file
@@ -45,7 +47,7 @@ public class LocationsExtractor {
                 // assign location to city
                 keeper.addLocation(city.getCityName(), location);
 
-                System.out.println(city.getCityName() + " " + address);
+//                System.out.println(city.getCityName() + " " + address);
             }
         });
     }

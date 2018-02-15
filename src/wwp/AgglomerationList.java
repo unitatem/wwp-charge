@@ -6,6 +6,10 @@ ref: https://pl.wikipedia.org/wiki/Toru%C5%84
 
 package wwp;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public enum AgglomerationList {
     KATOWICE("Katowice", "katowice"),
     WARSAW("Warszawa", "warszawa"),
@@ -45,7 +49,14 @@ public enum AgglomerationList {
         fileName = fileName_;
     }
 
-    public static final int size = AgglomerationList.values().length;
+    public static final int length = AgglomerationList.values().length;
+
+    private static final List<AgglomerationList> valuesList =
+            Collections.unmodifiableList(Arrays.asList(values()));
+
+    public static AgglomerationList getAt(int idx)  {
+        return valuesList.get(idx);
+    }
 
     public String getCityName() {
         return cityName;

@@ -24,6 +24,7 @@ public class Main {
         locationsExtractor = new LocationsExtractor(locationsKeeper, AgglomerationList.LODZ);
 
         Test test = new Test(locationsKeeper);
+        AgglomerationList.getAt(1);
 
 
 //        // Start scanning by implementing the interface
