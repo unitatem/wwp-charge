@@ -4,14 +4,15 @@ import extractor.AgglomerationsExtractor;
 import extractor.LocationsExtractor;
 import net.morbz.osmonaut.EntityFilter;
 import net.morbz.osmonaut.Osmonaut;
+import solver.Test;
 
 public class Main {
 
     public static void main(String[] args) {
         System.out.println("START");
 
-        Agglomerations agglomerations = new Agglomerations();
-        AgglomerationsExtractor agglomerationsExtractor = new AgglomerationsExtractor(agglomerations);
+//        Agglomerations agglomerations = new Agglomerations();
+//        AgglomerationsExtractor agglomerationsExtractor = new AgglomerationsExtractor(agglomerations);
 
         LocationsKeeper locationsKeeper = new LocationsKeeper();
         LocationsExtractor locationsExtractor = null;
@@ -21,6 +22,9 @@ public class Main {
         locationsExtractor = new LocationsExtractor(locationsKeeper, AgglomerationList.WARSAW);
         locationsExtractor = new LocationsExtractor(locationsKeeper, AgglomerationList.CRACOW);
         locationsExtractor = new LocationsExtractor(locationsKeeper, AgglomerationList.LODZ);
+
+        Test test = new Test(locationsKeeper);
+
 
 
 //        // Start scanning by implementing the interface

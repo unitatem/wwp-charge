@@ -1,17 +1,17 @@
 package solver;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import wwp.AgglomerationList;
 import wwp.Location;
 import wwp.LocationsKeeper;
 
+import java.util.ArrayList;
+
 public class Test {
 
-    void Test(LocationsKeeper lk){
-        //sprobuj tutaj wyswietlic zawartosc adresow w jednej aglomeracji please i uwzglednij to w Main
-        // moje proby nie zadzialaly
+    public Test(LocationsKeeper lk){
+        ArrayList<Location> array =  lk.agglomeration.get(AgglomerationList.WARSAW.getCityName());
+        for (Location loc : array)
+            System.out.println(loc.address);
     }
 }
 
