@@ -5,6 +5,8 @@ import wwp.Location;
 
 public class Geo {
 
+    public static double MIN_DISTANE = 250.0;
+
     private static double PI_2 = 0.5 * Math.PI;
     private static double rad2Meters = 111100.0 * Math.PI / 180.0;
 
