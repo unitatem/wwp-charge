@@ -1,5 +1,6 @@
 package utils;
 
+import com.sun.javafx.geom.Vec2d;
 import net.morbz.osmonaut.osm.LatLon;
 import wwp.AgglomerationList;
 import wwp.Agglomerations;
@@ -51,9 +52,35 @@ public class Geo {
         double distance = 0.0;
         for (int i = 0; i < AgglomerationList.length - 1; ++i) {
             for (int j = i + 1; j < AgglomerationList.length; ++j) {
-
+                City city1 = agglomerations.cities.get(i);
+                City city2 = agglomerations.cities.get(j);
+                LatLon ptx1 = findBestPoint(city1, city2, country);
+                LatLon ptx2 = findBestPoint(city2, city1, country);
+                distance += distance(ptx1, ptx2);
             }
         }
-        return 0.0;
+        return distance;
+    }
+
+    private static LatLon findBestPoint(City city1, City city2, HashMap<String, ArrayList<Location>> country) {
+        LatLon latLon1 = city1.entity.getCenter();
+        LatLon latLon2 = city2.entity.getCenter();
+        Vec2d vectFrom1To2 = calculateVector(latLon1, latLon2);
+        LatLon bestPoint = country.get(city1.name).get(0).entity.getCenter();
+        for (int k = 1; k < country.get(city1.name).size(); ++k) {
+            LatLon testPoint = country.get(city1.name).get(k).entity.getCenter();
+            Vec2d testVect = new Vec2d(testPoint.getLat() - bestPoint.getLat(), testPoint.getLon() - bestPoint.getLon());
+            double dot = vectFrom1To2.x * testVect.x + vectFrom1To2.y * testVect.y;
+            if (dot > 0.0) {
+                bestPoint = testPoint;
+            }
+        }
+        return bestPoint;
+    }
+
+    private static Vec2d calculateVector(LatLon begin, LatLon end) {
+        double diffNS = end.getLat() - begin.getLat();
+        double diffWE = end.getLon() - begin.getLon();
+        return new Vec2d(diffNS, diffWE);
     }
 }
