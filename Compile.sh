@@ -16,5 +16,5 @@ git pull
 
 
 # compile Java code
-javac -d bin -sourcepath src -cp lib/PCJ-5.0.6.jar:lib/OSMonaut-1.1-SNAPSHOT.jar src/Main.java
+javac -d bin -sourcepath src -cp lib/PCJ-5.0.6.jar:lib/OSMonaut-1.1-SNAPSHOT.jar src/wwp/Main.java
 
