@@ -2,71 +2,43 @@ package wwp;
 
 import java.io.IOException;
 
-import org.pcj.*;
-
 import extractor.AgglomerationsExtractor;
 import net.morbz.osmonaut.osm.LatLon;
 import solver.GA;
-import solver.Pair;
 import utils.Geo;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-@RegisterStorage(Main.Shared.class)
-public class Main implements StartPoint {
+public class Main {
 
-    @Storage(Main.class)
-    public enum Shared {
-        agglomerations,
-        locationsKeeper,
-        population
-    }
+    public static void main(String[] args) {
+        long startTime = System.currentTimeMillis();
+        int numberOfChargers = 6000;
+        int gaIterations = 50;
 
-    public Agglomerations agglomerations = new Agglomerations(6000);
-    public LocationsKeeper locationsKeeper = new LocationsKeeper();
-    HashMap<String, ArrayList<Location>> country = new HashMap<>();
+        System.out.println("START Loading maps data");
 
-    public static void main(String[] args) throws IOException {
-//        String[] nodes = new String[]{"localhost", "localhost"};
-//        PCJ.deploy(Main.class, nodes);
+        Agglomerations agglomerations = new Agglomerations(numberOfChargers);
+        LocationsKeeper locationsKeeper = new LocationsKeeper();
 
-        String nodesFile = "nodes.txt";
-        PCJ.start(Main.class, new NodesDescription(nodesFile));
-    }
+        AgglomerationsExtractor agglomerationsExtractor = null;
+        for (AgglomerationList city : AgglomerationList.values())
+            agglomerationsExtractor = new AgglomerationsExtractor(city, agglomerations, locationsKeeper);
 
-    @Override
-    public void main() {
-        if (PCJ.myId() == 0) {
-            System.out.println("START Loading maps data");
+        if (agglomerationsExtractor != null)
+            agglomerationsExtractor.checkAfterCitiesScan();
 
-            AgglomerationsExtractor agglomerationsExtractor = null;
-            for (AgglomerationList city : AgglomerationList.values())
-                agglomerationsExtractor = new AgglomerationsExtractor(city, agglomerations, locationsKeeper);
-
-            if (agglomerationsExtractor != null)
-                agglomerationsExtractor.checkAfterCitiesScan();
-
-            System.out.println("START GA");
-        }
-
-        PCJ.monitor(Shared.agglomerations);
-        PCJ.monitor(Shared.locationsKeeper);
-        if (PCJ.myId() == 0) {
-            PCJ.asyncBroadcast(agglomerations, Shared.agglomerations);
-            PCJ.asyncBroadcast(locationsKeeper, Shared.locationsKeeper);
-        }
-        PCJ.waitFor(Shared.agglomerations);
-        PCJ.waitFor(Shared.locationsKeeper);
+        System.out.println("START GA");
 
         GA ga = new GA(agglomerations, locationsKeeper);
-        for (int i = 0; i < 10; ++i) {
+        for (int i = 0; i < gaIterations; ++i) {
             ga.step();
-            if (PCJ.myId() == 0)
-                System.out.println("iter = " + i + " error = " + ga.evaluateError());
+            System.out.println("Iteration = " + i + " Road = " + ga.evaluateError() + "m");
         }
-
         HashMap<String, ArrayList<Location>> bestPopulation = ga.getPopulation();
+
         LatLon latLon = Geo.centerOfMass(bestPopulation.get(AgglomerationList.WARSAW.getCityName()));
         double dist = Geo.distance(agglomerations.citiesLookUp
                 .get(AgglomerationList.WARSAW.getCityName()).entity.getCenter(), latLon);
@@ -76,6 +48,20 @@ public class Main implements StartPoint {
 //        ArrayList<Location> countryLocations = new ArrayList<>();
 //        CountryLocationsExtractor countryLocationsExtractor = new CountryLocationsExtractor(locationsKeeper, countryLocations);
 
+        try {
+            PrintWriter writer = new PrintWriter("out.txt", "UTF-8");
+            writer.println("Krzemowe Mozgi kdmszk03");
+            writer.println("https://github.com/unitatem/wwp-charge");
+            writer.println("" + (int) (ga.evaluateError() * 1.3 / 1000) + "km (direct)");
+            writer.println("");
+            writer.println("brak odleglosci " + Geo.centerOfMass(bestPopulation.get(AgglomerationList.WARSAW.getCityName())));
+            writer.println("brak odleglosci " + Geo.centerOfMass(bestPopulation.get(AgglomerationList.WROCLAW.getCityName())));
+            long estimatedTime = System.currentTimeMillis() - startTime;
+            writer.println("" + estimatedTime + "ms");
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         System.out.println("END");
     }

@@ -1,11 +1,9 @@
 package solver;
 
-import org.pcj.PCJ;
 import utils.Geo;
 import wwp.Agglomerations;
 import wwp.Location;
 import wwp.LocationsKeeper;
-import wwp.Main;
 
 import java.util.*;
 
@@ -15,7 +13,7 @@ public class GA {
     private Agglomerations agglomerations;
     private LocationsKeeper locationsKeeper;
 
-    private int populationSize = 20;
+    private int populationSize = 10;
 
     public GA(Agglomerations agglomerations_, LocationsKeeper locationsKeeper_) {
         population = new ArrayList<>();
@@ -30,18 +28,9 @@ public class GA {
     }
 
     public void step() {
-//        PCJ.monitor(Main.Shared.population);
-//        if (PCJ.myId() == 0) {
-//            PCJ.asyncBroadcast(population, Main.Shared.population);
-//        }
-//        PCJ.waitFor(Main.Shared.population);
-
         selection();
         crossOver();
         mutation();
-
-
-
     }
 
     public double evaluateError() {

@@ -22,12 +22,12 @@ public class RandomLocations {
                 Location possibleLocation = oldKeeper.agglomeration.get(city.name).get(randomNumber);
                 boolean isGoodCandidate = true;
                 // check if candidate is not closer than MIN_DISTANCE to other chargers
-//                for (Location otherLocation : oldKeeper.agglomeration.get(city.name)) {
-//                    if (Geo.distance(otherLocation, possibleLocation) < Geo.MIN_DISTANE) {
-//                        isGoodCandidate = false;
-//                        break;
-//                    }
-//                }
+                for (Location otherLocation : oldKeeper.agglomeration.get(city.name)) {
+                    if (Geo.distance(otherLocation, possibleLocation) < Geo.MIN_DISTANE) {
+                        isGoodCandidate = false;
+                        break;
+                    }
+                }
                 if (isGoodCandidate)
                     locationsKeeper.addLocation(city.name, possibleLocation);
                 // here should be else --i but removing it prevent crash if there is not enough places for chargers

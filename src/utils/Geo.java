@@ -56,8 +56,12 @@ public class Geo {
         }
 
         double totalDistance = 0.0;
-        for (City city : agglomerations.cities)
-            totalDistance = distance(city.entity.getCenter(), center.get(city.name));
+        for (City city : agglomerations.cities) {
+            LatLon latLon = center.get(city.name);
+            if (latLon == null)
+                continue;
+            totalDistance = distance(city.entity.getCenter(), latLon);
+        }
         return totalDistance;
     }
 
