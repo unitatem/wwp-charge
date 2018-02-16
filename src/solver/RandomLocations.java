@@ -1,26 +1,27 @@
 package solver;
 
-import wwp.AgglomerationList;
-import wwp.Location;
+import wwp.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 public class RandomLocations {
 
-    // losowanie i zwracanie listy randomowych lokalizacji
-    //ArrayList<Location> randLocations = new ArrayList();
+    public HashMap<String, ArrayList<Location>> randomLocations;
 
-    public RandomLocations() {
-        ArrayList<Location> randLocations = new ArrayList<Location>();
-        Random rand = new Random();
-        int known = 0; // istniejące stacje
-        int maxPopulation = 6000 - known;
-        int max = 0; // (dlugosc listy z ktorej losuje-1)
-        int randomNumber = -1;
-        for(int i = 0; i<maxPopulation; i++) {
-            randomNumber = rand.nextInt(max + 1);
-            //randLocations[i] =
+    public RandomLocations(Agglomerations agglomerations, LocationsKeeper oldKeeper, int totalLocal4Agglomeration) {
+
+        LocationsKeeper locationsKeeper = new LocationsKeeper();
+
+        for(City city : agglomerations.cities) {
+            for (int i = 0; i < (int)city.maxChargers; i++) {
+                int randomNumber = new Random().nextInt(totalLocal4Agglomeration);
+                locationsKeeper.addLocation(city.name, oldKeeper.agglomeration.get(city).get(randomNumber));
         }
+        }
+        randomLocations = locationsKeeper.agglomeration;
+        System.out.println(randomLocations);
     }
 }
+//System.out.println(AgglomerationList.getAt(1));
