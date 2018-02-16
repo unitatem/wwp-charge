@@ -48,6 +48,9 @@ public class AgglomerationsExtractor {
                 if (city != null) {
                     city.setEntity(entity);
 //                    System.out.println("extractor.AgglomerationsExtractor => Found: " + name);
+                } else if (Objects.equals(name,"Gdynia")) {
+                    city = agglomerations.citiesLookUp.get(AgglomerationList.TROJMIASTO.getCityName());
+                    city.setEntity(entity);
                 }
             }
         });
