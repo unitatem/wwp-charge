@@ -58,7 +58,7 @@ public class Main {
             PrintWriter writer = new PrintWriter("lista1.txt", "UTF-8");
             for (AgglomerationList agglomeration : AgglomerationList.values()) {
                 for (Location location : bestPopulation.get(agglomeration.getCityName())) {
-                    writer.println(idx + " 6 " + location.entity.getCenter());
+                    writer.println(idx + " 3 " + location.entity.getCenter());
                     ++idx;
                 }
             }
