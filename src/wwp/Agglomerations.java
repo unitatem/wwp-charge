@@ -10,7 +10,7 @@ public class Agglomerations {
     public int totalPopulation;
     public int totalChargers;
 
-    public Agglomerations() {
+    public Agglomerations(int total) {
         cities = new ArrayList<>();
         setCities();
 
@@ -19,10 +19,15 @@ public class Agglomerations {
             totalPopulation += city.population;
 
         for(City city : cities)
-            city.setMaxChargers((double)city.population * totalChargers / totalPopulation);
+            city.setMaxChargers((double)city.population * SetTotalChargers(total) / totalPopulation);
 
         citiesLookUp = new HashMap<>();
         setCitiesLookUp();
+    }
+
+    public int SetTotalChargers(int all){
+        totalChargers = all;
+        return totalChargers;
     }
 
     private void setCities() {
