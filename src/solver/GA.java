@@ -22,7 +22,6 @@ public class GA {
         locationsKeeper = locationsKeeper_;
 
         initialize();
-
     }
 
     public HashMap<String, ArrayList<Location>> getPopulation() {
@@ -36,7 +35,7 @@ public class GA {
     }
 
     public double evaluateError() {
-        return 0.0;
+        return Geo.minCityDistance(population.get(0).getElement1());
     }
     
     private void initialize() {

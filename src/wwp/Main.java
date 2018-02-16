@@ -12,7 +12,7 @@ import java.util.HashMap;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("START");
+        System.out.println("START Load");
 
         Agglomerations agglomerations = new Agglomerations();
         LocationsKeeper locationsKeeper = new LocationsKeeper();
@@ -26,10 +26,11 @@ public class Main {
         if (agglomerationsExtractor != null)
             agglomerationsExtractor.checkAfterCitiesScan();
 
+        System.out.println("START GA");
         GA ga = new GA(agglomerations, locationsKeeper);
-        for (int i = 0; i < 1; ++i) {
-            System.out.println("iter = " + i);
+        for (int i = 0; i < 10; ++i) {
             ga.step();
+            System.out.println("iter = " + i + " error = " + ga.evaluateError());
         }
         HashMap<String, ArrayList<Location>> bestPopulation = ga.getPopulation();
 

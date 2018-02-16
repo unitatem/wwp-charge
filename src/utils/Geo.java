@@ -10,6 +10,8 @@ import wwp.Location;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static java.lang.Math.min;
+
 public class Geo {
 
     public static double MIN_DISTANE = 250.0;
@@ -50,6 +52,27 @@ public class Geo {
         for (City city : agglomerations.cities)
             totalDistance = distance(city.entity.getCenter(), center.get(city.name));
         return totalDistance;
+    }
+
+    public static double minCityDistance(HashMap<String, ArrayList<Location>> country) {
+        double distance = 0.0;
+        for (int i = 0; i < AgglomerationList.length - 1; ++i) {
+            String name1 = AgglomerationList.getAt(i).getCityName();
+            for (int j = i + 1; j < AgglomerationList.length; ++j) {
+                String name2 = AgglomerationList.getAt(j).getCityName();
+
+                double minDistance = 0.0;
+                for (Location location1 : country.get(name1)) {
+                    for (Location location2 : country.get(name2)) {
+                        double dist = distance(location1.entity.getCenter(), location2.entity.getCenter());
+                        minDistance = min(minDistance, dist);
+                    }
+                }
+                distance += minDistance;
+            }
+        }
+
+        return distance;
     }
 
     public static double minCityDistanceHeuristic(Agglomerations agglomerations, HashMap<String, ArrayList<Location>> country) {
