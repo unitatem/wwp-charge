@@ -16,7 +16,7 @@ public class Main {
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
         int numberOfChargers = 6000;
-        int gaIterations = 50;
+        int gaIterations = 500;
 
         System.out.println("START Loading maps data");
 
@@ -35,18 +35,37 @@ public class Main {
         GA ga = new GA(agglomerations, locationsKeeper);
         for (int i = 0; i < gaIterations; ++i) {
             ga.step();
-            System.out.println("Iteration = " + i + " Road = " + ga.evaluateError() + "m");
+            System.out.println("Iteration = " + i + " ErrorWithHeuristic = " + ga.evaluateErrorHeuristic());
         }
         HashMap<String, ArrayList<Location>> bestPopulation = ga.getPopulation();
 
-        LatLon latLon = Geo.centerOfMass(bestPopulation.get(AgglomerationList.WARSAW.getCityName()));
-        double dist = Geo.distance(agglomerations.citiesLookUp
-                .get(AgglomerationList.WARSAW.getCityName()).entity.getCenter(), latLon);
 
-        System.out.println("Warszawa dystans = " + dist);
+        LatLon latLonWarsaw = Geo.centerOfMass(bestPopulation.get(AgglomerationList.WARSAW.getCityName()));
+        double distWarsaw = Geo.distance(agglomerations.citiesLookUp
+                .get(AgglomerationList.WARSAW.getCityName()).entity.getCenter(), latLonWarsaw);
+        System.out.println("Warszawa dystans od srodka = " + distWarsaw);
+
+        LatLon latLonWroclaw = Geo.centerOfMass(bestPopulation.get(AgglomerationList.WARSAW.getCityName()));
+        double distWroclaw = Geo.distance(agglomerations.citiesLookUp
+                .get(AgglomerationList.WARSAW.getCityName()).entity.getCenter(), latLonWroclaw);
+        System.out.println("Wroclas dystans od srodka = " + distWroclaw);
 
 //        ArrayList<Location> countryLocations = new ArrayList<>();
 //        CountryLocationsExtractor countryLocationsExtractor = new CountryLocationsExtractor(locationsKeeper, countryLocations);
+
+        int idx = 1;
+        try {
+            PrintWriter writer = new PrintWriter("lista1.txt", "UTF-8");
+            for (AgglomerationList agglomeration : AgglomerationList.values()) {
+                for (Location location : bestPopulation.get(agglomeration.getCityName())) {
+                    writer.println(idx + " 6 " + location.entity.getCenter());
+                    ++idx;
+                }
+            }
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         try {
             PrintWriter writer = new PrintWriter("out.txt", "UTF-8");

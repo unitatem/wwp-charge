@@ -15,19 +15,21 @@ public class RandomLocations {
 
         LocationsKeeper locationsKeeper = new LocationsKeeper();
 
-        for(City city : agglomerations.cities) {
+        for (City city : agglomerations.cities) {
             int numberOfLocationsInCity = oldKeeper.agglomeration.get(city.name).size();
-            for (int i = 0; i < (int)city.maxChargers; ++i) {
+            for (int i = 0; i < (int) city.maxChargers; i += 1) {
                 int randomNumber = new Random().nextInt(numberOfLocationsInCity);
                 Location possibleLocation = oldKeeper.agglomeration.get(city.name).get(randomNumber);
                 boolean isGoodCandidate = true;
                 // check if candidate is not closer than MIN_DISTANCE to other chargers
-                for (Location otherLocation : oldKeeper.agglomeration.get(city.name)) {
-                    if (Geo.distance(otherLocation, possibleLocation) < Geo.MIN_DISTANE) {
-                        isGoodCandidate = false;
-                        break;
+                if (locationsKeeper.agglomeration.size() != 0 && locationsKeeper.agglomeration.get(city.name) != null)
+                    for (Location otherLocation : locationsKeeper.agglomeration.get(city.name)) {
+                        if (otherLocation != null && Geo.distance(otherLocation, possibleLocation) < Geo.MIN_DISTANE) {
+                            isGoodCandidate = false;
+                            break;
+                        }
                     }
-                }
+
                 if (isGoodCandidate)
                     locationsKeeper.addLocation(city.name, possibleLocation);
                 // here should be else --i but removing it prevent crash if there is not enough places for chargers
@@ -36,9 +38,8 @@ public class RandomLocations {
         randomLocations = locationsKeeper.agglomeration;
     }
 
-    void RandomOnes(HashMap hashMap){ //use: RandomOnes(RandomLocations rl.randomLocations)
+    void RandomOnes(HashMap hashMap) { //use: RandomOnes(RandomLocations rl.randomLocations)
 
-        
 
     }
 }

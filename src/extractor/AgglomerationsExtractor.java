@@ -27,7 +27,7 @@ public class AgglomerationsExtractor {
         // Set which OSM entities should be scanned (only nodes and ways in this case)
         EntityFilter generalFilter = new EntityFilter(true, true, false);
         // Set the binary OSM source file
-        naut = new Osmonaut("/tmp/osm/agglomerations/" + city.getFileName() + ".pbf", generalFilter);
+        naut = new Osmonaut("osm/agglomerations/" + city.getFileName() + ".pbf", generalFilter);
 
         doCityScan();
         doLocationsScan();

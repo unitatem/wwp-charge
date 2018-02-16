@@ -13,7 +13,7 @@ public class GA {
     private Agglomerations agglomerations;
     private LocationsKeeper locationsKeeper;
 
-    private int populationSize = 10;
+    private int populationSize = 300;
 
     public GA(Agglomerations agglomerations_, LocationsKeeper locationsKeeper_) {
         population = new ArrayList<>();
@@ -33,21 +33,30 @@ public class GA {
         mutation();
     }
 
+    public double evaluateErrorHeuristic() {
+        return population.get(0).getElement0();
+    }
+
     public double evaluateError() {
+        sortPopulation();
         return Geo.minCityDistance(population.get(0).getElement1());
+    }
+
+    private void add2Population(HashMap<String, ArrayList<Location>> locations) {
+        double minDist = Geo.minCityDistanceHeuristic(agglomerations, locations);
+        double punishment = Geo.centerOfMassTotal(agglomerations, locations);
+        population.add(new Pair(minDist + punishment * 100000, locations));
     }
     
     private void initialize() {
         for (int i = 0; i < populationSize; ++i) {
             RandomLocations rl = new RandomLocations(agglomerations, locationsKeeper);
             HashMap<String, ArrayList<Location>> randomLocations = rl.randomLocations;
-            double minDist = Geo.minCityDistanceHeuristic(agglomerations, randomLocations);
-            double punishment = Geo.centerOfMassTotal(agglomerations, randomLocations);
-            population.add(new Pair(minDist + punishment, randomLocations));
+            add2Population(randomLocations);
         }
     }
 
-    private void selection() {
+    private void sortPopulation() {
         Collections.sort(population, new Comparator<Pair<Double, HashMap<String, ArrayList<Location>>>>() {
             public int compare(Pair p1, Pair p2){
                 double v1 = (double)p1.getElement0();
@@ -60,7 +69,10 @@ public class GA {
                     return 0;
             }
         });
+    }
 
+    private void selection() {
+        sortPopulation();
         ArrayList<Pair<Double, HashMap<String, ArrayList<Location>>>> newPopulation = new ArrayList<>();
         for (int i = 0; i < population.size() / 2; ++i)
             newPopulation.add(population.get(i));
@@ -71,9 +83,7 @@ public class GA {
     private void crossOver() {
         for (int i = population.size(); i < populationSize; ++i) {
             HashMap<String, ArrayList<Location>> child = makeChild();
-            double minDist = Geo.minCityDistanceHeuristic(agglomerations, child);
-            double punishment = Geo.centerOfMassTotal(agglomerations, child);
-            population.add(new Pair(minDist + punishment, child));
+            add2Population(child);
         }
     }
 
