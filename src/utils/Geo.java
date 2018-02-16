@@ -21,7 +21,7 @@ public class Geo {
     private static double deg2rad = Math.PI / 180.0;
 
     // ref: https://pl.wikibooks.org/wiki/Astronomiczne_podstawy_geografii/Odleg%C5%82o%C5%9Bci
-    private static double distance(LatLon latLon1, LatLon latLon2) {
+    public static double distance(LatLon latLon1, LatLon latLon2) {
         double AP = (90.0 - latLon1.getLat()) * deg2rad;
         double BP = (90.0 - latLon2.getLat()) * deg2rad;
         double P = (latLon1.getLon() - latLon2.getLon()) * deg2rad;
@@ -34,21 +34,25 @@ public class Geo {
         return distance(loc1.entity.getCenter(), loc2.entity.getCenter());
     }
 
-    public static double centerOfMass(Agglomerations agglomerations, HashMap<String, ArrayList<Location>> country) {
+    public static LatLon centerOfMass(ArrayList<Location> agglomeration) {
+            double lat = 0.0;
+            double lon = 0.0;
+            for (Location location : agglomeration) {
+                LatLon latLon = location.entity.getCenter();
+                lat += latLon.getLat();
+                lon += latLon.getLon();
+            }
+            int length = agglomeration.size();
+            return new LatLon(lat / length, lon / length);
+    }
+
+    public static double centerOfMassTotal(Agglomerations agglomerations, HashMap<String, ArrayList<Location>> country) {
         HashMap<String, LatLon> center = new HashMap<>();
         for (AgglomerationList city : AgglomerationList.values()) {
             ArrayList<Location> locationArrayList = country.get(city.getCityName());
             if (locationArrayList == null)
                 continue;
-            double lat = 0.0;
-            double lon = 0.0;
-            for (Location location : locationArrayList) {
-                LatLon latLon = location.entity.getCenter();
-                lat += latLon.getLat();
-                lon += latLon.getLon();
-            }
-            int length = locationArrayList.size();
-            center.put(city.getCityName(), new LatLon(lat / length, lon / length));
+            center.put(city.getCityName(), centerOfMass(locationArrayList));
         }
 
         double totalDistance = 0.0;

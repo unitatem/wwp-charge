@@ -1,10 +1,11 @@
 package solver;
 
+import org.pcj.PCJ;
 import utils.Geo;
-import wwp.AgglomerationList;
 import wwp.Agglomerations;
 import wwp.Location;
 import wwp.LocationsKeeper;
+import wwp.Main;
 
 import java.util.*;
 
@@ -14,7 +15,7 @@ public class GA {
     private Agglomerations agglomerations;
     private LocationsKeeper locationsKeeper;
 
-    private int populationSize = 10;
+    private int populationSize = 20;
 
     public GA(Agglomerations agglomerations_, LocationsKeeper locationsKeeper_) {
         population = new ArrayList<>();
@@ -29,9 +30,18 @@ public class GA {
     }
 
     public void step() {
+//        PCJ.monitor(Main.Shared.population);
+//        if (PCJ.myId() == 0) {
+//            PCJ.asyncBroadcast(population, Main.Shared.population);
+//        }
+//        PCJ.waitFor(Main.Shared.population);
+
         selection();
         crossOver();
         mutation();
+
+
+
     }
 
     public double evaluateError() {
@@ -43,7 +53,7 @@ public class GA {
             RandomLocations rl = new RandomLocations(agglomerations, locationsKeeper);
             HashMap<String, ArrayList<Location>> randomLocations = rl.randomLocations;
             double minDist = Geo.minCityDistanceHeuristic(agglomerations, randomLocations);
-            double punishment = Geo.centerOfMass(agglomerations, randomLocations);
+            double punishment = Geo.centerOfMassTotal(agglomerations, randomLocations);
             population.add(new Pair(minDist + punishment, randomLocations));
         }
     }
@@ -73,7 +83,7 @@ public class GA {
         for (int i = population.size(); i < populationSize; ++i) {
             HashMap<String, ArrayList<Location>> child = makeChild();
             double minDist = Geo.minCityDistanceHeuristic(agglomerations, child);
-            double punishment = Geo.centerOfMass(agglomerations, child);
+            double punishment = Geo.centerOfMassTotal(agglomerations, child);
             population.add(new Pair(minDist + punishment, child));
         }
     }
