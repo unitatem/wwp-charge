@@ -35,5 +35,11 @@ public class RandomLocations {
         randomLocations = locationsKeeper.agglomeration;
         System.out.println(randomLocations);
     }
+
+    void RandomOnes(HashMap hashMap){ //use: RandomOnes(RandomLocations rl.randomLocations)
+
+        
+
+    }
 }
 //System.out.println(AgglomerationList.getAt(1));
