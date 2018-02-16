@@ -13,6 +13,10 @@ public abstract class LocationScanner implements IOsmonautReceiver {
         return tags.hasKeyValue(OSM.SHOP, OSM.SUPERMARKET)
                 || tags.hasKeyValue(OSM.OFFICE, OSM.GOVERNMENT)
                 || tags.hasKeyValue(OSM.BUILDING, OSM.CIVIC)
-                || tags.hasKeyValue(OSM.BUILDING, OSM.TRANSFORMER_TOWER);
+                || tags.hasKeyValue(OSM.BUILDING, OSM.TRANSFORMER_TOWER)
+                || tags.hasKeyValue(OSM.AMENITY, OSM.CINEMA)
+                || tags.hasKeyValue(OSM.AMENITY, OSM.THEATRE)
+                || tags.hasKeyValue(OSM.AMENITY, OSM.RESTAURANT)
+                || tags.hasKeyValue(OSM.AMENITY, OSM.CHARGING_STATION);
     }
 }

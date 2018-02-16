@@ -14,7 +14,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("START Load");
 
-        Agglomerations agglomerations = new Agglomerations();
+        Agglomerations agglomerations = new Agglomerations(6000);
         LocationsKeeper locationsKeeper = new LocationsKeeper();
 
         AgglomerationsExtractor agglomerationsExtractor = null;

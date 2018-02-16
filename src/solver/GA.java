@@ -87,13 +87,13 @@ public class GA {
         HashMap<String, ArrayList<Location>> child = new HashMap<>();
 
         for (int i = 0; i < switchIdx; ++i) {
-            String cityName = agglomerations.cities.get(obj1).name;
-            ArrayList<Location> chargers = locationsKeeper.agglomeration.get(cityName);
+            String cityName = agglomerations.cities.get(i).name;
+            ArrayList<Location> chargers = population.get(obj1).getElement1().get(cityName);
             child.put(cityName, chargers);
         }
         for (int i = switchIdx; i < agglomerations.cities.size(); ++i) {
-            String cityName = agglomerations.cities.get(obj2).name;
-            ArrayList<Location> chargers = locationsKeeper.agglomeration.get(cityName);
+            String cityName = agglomerations.cities.get(i).name;
+            ArrayList<Location> chargers = population.get(obj2).getElement1().get(cityName);
             child.put(cityName, chargers);
         }
 

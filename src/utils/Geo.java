@@ -17,16 +17,17 @@ public class Geo {
     public static double MIN_DISTANE = 250.0;
 
     private static double PI_2 = 0.5 * Math.PI;
-    private static double rad2Meters = 111100.0 * Math.PI / 180.0;
+    private static double rad2deg2Meters = 111100.0 * 180.0 / Math.PI;
+    private static double deg2rad = Math.PI / 180.0;
 
     // ref: https://pl.wikibooks.org/wiki/Astronomiczne_podstawy_geografii/Odleg%C5%82o%C5%9Bci
     private static double distance(LatLon latLon1, LatLon latLon2) {
-        double AP = PI_2 - latLon1.getLat();
-        double BP = PI_2 - latLon2.getLat();
-        double P = latLon1.getLon() - latLon2.getLon();
+        double AP = (90.0 - latLon1.getLat()) * deg2rad;
+        double BP = (90.0 - latLon2.getLat()) * deg2rad;
+        double P = (latLon1.getLon() - latLon2.getLon()) * deg2rad;
 
         double diffRad = Math.acos(Math.cos(AP)*Math.cos(BP) + Math.sin(AP)*Math.sin(BP)*Math.cos(P));
-        return diffRad * rad2Meters;
+        return diffRad * rad2deg2Meters;
     }
 
     public static double distance(Location loc1, Location loc2) {
@@ -37,7 +38,8 @@ public class Geo {
         HashMap<String, LatLon> center = new HashMap<>();
         for (AgglomerationList city : AgglomerationList.values()) {
             ArrayList<Location> locationArrayList = country.get(city.getCityName());
-            int length = locationArrayList.size();
+            if (locationArrayList == null)
+                continue;
             double lat = 0.0;
             double lon = 0.0;
             for (Location location : locationArrayList) {
@@ -45,6 +47,7 @@ public class Geo {
                 lat += latLon.getLat();
                 lon += latLon.getLon();
             }
+            int length = locationArrayList.size();
             center.put(city.getCityName(), new LatLon(lat / length, lon / length));
         }
 
@@ -61,7 +64,7 @@ public class Geo {
             for (int j = i + 1; j < AgglomerationList.length; ++j) {
                 String name2 = AgglomerationList.getAt(j).getCityName();
 
-                double minDistance = 0.0;
+                double minDistance = Double.MAX_VALUE;
                 for (Location location1 : country.get(name1)) {
                     for (Location location2 : country.get(name2)) {
                         double dist = distance(location1.entity.getCenter(), location2.entity.getCenter());
@@ -81,6 +84,8 @@ public class Geo {
             for (int j = i + 1; j < AgglomerationList.length; ++j) {
                 City city1 = agglomerations.cities.get(i);
                 City city2 = agglomerations.cities.get(j);
+                if (country.get(city1.name) == null || country.get(city2.name) == null)
+                    continue;
                 LatLon ptx1 = findBestPoint(city1, city2, country);
                 LatLon ptx2 = findBestPoint(city2, city1, country);
                 distance += distance(ptx1, ptx2);

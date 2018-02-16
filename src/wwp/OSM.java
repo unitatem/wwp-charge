@@ -29,4 +29,7 @@ public interface OSM {
 
     String AMENITY = "amenity";
     String CHARGING_STATION = "charging_station";
+    String CINEMA = "cinema";
+    String THEATRE = "theatre";
+    String RESTAURANT = "restaurant";
 }
