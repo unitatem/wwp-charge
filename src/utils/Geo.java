@@ -1,7 +1,12 @@
 package utils;
 
 import net.morbz.osmonaut.osm.LatLon;
+import wwp.AgglomerationList;
+import wwp.City;
 import wwp.Location;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Geo {
 
@@ -22,5 +27,26 @@ public class Geo {
 
     public static double distance(Location loc1, Location loc2) {
         return distance(loc1.entity.getCenter(), loc2.entity.getCenter());
+    }
+
+    public static HashMap<String, LatLon> centerOfMass(HashMap<String, ArrayList<Location>> country) {
+        HashMap<String, LatLon> output = new HashMap<>();
+        for (AgglomerationList city : AgglomerationList.values()) {
+            ArrayList<Location> locationArrayList = country.get(city.getCityName());
+            int length = locationArrayList.size();
+            double lat = 0.0;
+            double lon = 0.0;
+            for (Location location : locationArrayList) {
+                LatLon latLon = location.entity.getCenter();
+                lat += latLon.getLat();
+                lon += latLon.getLon();
+            }
+            output.put(city.getCityName(), new LatLon(lat / length, lon / length));
+        }
+        return output;
+    }
+
+    public static HashMap<String, double> minCityDistanceHeuristic(HashMap<String, ArrayList<Location>> country) {
+        return null;
     }
 }

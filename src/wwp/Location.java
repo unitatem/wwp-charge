@@ -4,7 +4,6 @@ import net.morbz.osmonaut.osm.Entity;
 
 public class Location {
 
-    public int stationsCount;
     public String address;
     public Entity entity;
 
