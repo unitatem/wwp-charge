@@ -25,6 +25,6 @@ sbatch <<EOT
 
 module load java
 
-srun hostname > wwp-charge/nodes.txt
-#time srun -N $1 -n $1 -c $2 java -cp wwp-charge/lib/PCJ-5.0.6.jar:wwp-charge/lib/#OSMonaut-1.1-all.jar:wwp-charge/lib/commons-math3-3.6.1.jar Main
+srun hostname > nodes.txt
+#time srun -N $1 -n $1 -c $2 java -cp lib/PCJ-5.0.6.jar:lib/OSMonaut-1.1-SNAPSHOT.jar Main
 EOT
