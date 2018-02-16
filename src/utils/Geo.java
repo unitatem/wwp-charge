@@ -2,6 +2,7 @@ package utils;
 
 import net.morbz.osmonaut.osm.LatLon;
 import wwp.AgglomerationList;
+import wwp.Agglomerations;
 import wwp.City;
 import wwp.Location;
 
@@ -46,7 +47,13 @@ public class Geo {
         return output;
     }
 
-    public static double minCityDistanceHeuristic(HashMap<String, ArrayList<Location>> country) {
+    public static double minCityDistanceHeuristic(Agglomerations agglomerations, HashMap<String, ArrayList<Location>> country) {
+        double distance = 0.0;
+        for (int i = 0; i < AgglomerationList.length - 1; ++i) {
+            for (int j = i + 1; j < AgglomerationList.length; ++j) {
+
+            }
+        }
         return 0.0;
     }
 }
