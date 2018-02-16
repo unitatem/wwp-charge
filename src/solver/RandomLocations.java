@@ -11,13 +11,14 @@ public class RandomLocations {
 
     public HashMap<String, ArrayList<Location>> randomLocations;
 
-    public RandomLocations(Agglomerations agglomerations, LocationsKeeper oldKeeper, int totalLocal4Agglomeration) {
+    public RandomLocations(Agglomerations agglomerations, LocationsKeeper oldKeeper) {
 
         LocationsKeeper locationsKeeper = new LocationsKeeper();
 
         for(City city : agglomerations.cities) {
+            int numberOfLocationsInCity = oldKeeper.agglomeration.get(city).size();
             for (int i = 0; i < (int)city.maxChargers; --i) {
-                int randomNumber = new Random().nextInt(totalLocal4Agglomeration);
+                int randomNumber = new Random().nextInt(numberOfLocationsInCity);
                 Location possibleLocation = oldKeeper.agglomeration.get(city).get(randomNumber);
                 boolean isGoodCandidate = true;
                 // check if candidate is not closer than MIN_DISTANCE to other chargers

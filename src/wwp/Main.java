@@ -2,10 +2,12 @@ package wwp;
 
 import extractor.AgglomerationsExtractor;
 import extractor.CountryLocationsExtractor;
+import solver.GA;
 import solver.RandomLocations;
 import solver.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Main {
 
@@ -15,45 +17,25 @@ public class Main {
         Agglomerations agglomerations = new Agglomerations();
         LocationsKeeper locationsKeeper = new LocationsKeeper();
 
-        AgglomerationsExtractor agglomerationsExtractor;
-//        for (AgglomerationList city : AgglomerationList.values())
-//            agglomerationsExtractor = new AgglomerationsExtractor(city, agglomerations, locationsKeeper);
+        AgglomerationsExtractor agglomerationsExtractor = null;
+        for (AgglomerationList city : AgglomerationList.values())
+            agglomerationsExtractor = new AgglomerationsExtractor(city, agglomerations, locationsKeeper);
+
 //        agglomerationsExtractor = new AgglomerationsExtractor(AgglomerationList.KATOWICE, agglomerations, locationsKeeper);
-        agglomerationsExtractor = new AgglomerationsExtractor(AgglomerationList.WARSAW, agglomerations, locationsKeeper);
-//        agglomerationsExtractor = new AgglomerationsExtractor(AgglomerationList.LODZ, agglomerations, locationsKeeper);
-//        agglomerationsExtractor = new AgglomerationsExtractor(AgglomerationList.CRACOW, agglomerations, locationsKeeper);
 
-        agglomerationsExtractor.checkAfterCitiesScan();
-        int totalLocalisationsForAgglomeration = locationsKeeper.agglomeration.get(AgglomerationList.WARSAW).size();
-        ArrayList<Location> countryLocations = new ArrayList<>();
-        CountryLocationsExtractor countryLocationsExtractor = new CountryLocationsExtractor(locationsKeeper, countryLocations);
+        if (agglomerationsExtractor != null)
+            agglomerationsExtractor.checkAfterCitiesScan();
 
-        //Test test = new Test(locationsKeeper);
-        //Agglomerations agglomerations;
-        //agglomerations.totalChargers = 6000;
-        System.out.println(AgglomerationList.getAt(1));
-        RandomLocations randomLocations = new RandomLocations(agglomerations, locationsKeeper, totalLocalisationsForAgglomeration);
+        GA ga = new GA(agglomerations, locationsKeeper);
+        for (int i = 0; i < 1; ++i) {
+            System.out.println("iter = " + i);
+            ga.step();
+        }
+        HashMap<String, ArrayList<Location>> bestPopulation = ga.getPopulation();
 
-//        // Start scanning by implementing the interface
-//        naut.scan(new IOsmonautReceiver() {
-//            @Override
-//            public boolean needsEntity(EntityType type, Tags tags) {
-//                // key, key_value
-//                return (tags.hasKeyValue("place", "city") && tags.hasKey("name"));
-//            }
-//
-//            @Override
-//            public void foundEntity(Entity entity) {
-//                // Print name and center coordinates
-//                String name = entity.getTags().get("name");
-//                Iterator<String> iter = entity.getTags().iterator();
-//                for (; iter.hasNext();) {
-//                    String s = (String) iter.next();
-//                    System.out.print(s + " ");
-//                }
-//                System.out.println(name + ": " + entity.getCenter());
-//            }
-//        });
+//        ArrayList<Location> countryLocations = new ArrayList<>();
+//        CountryLocationsExtractor countryLocationsExtractor = new CountryLocationsExtractor(locationsKeeper, countryLocations);
+
 
         System.out.println("END");
     }

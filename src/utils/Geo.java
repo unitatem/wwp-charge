@@ -31,8 +31,8 @@ public class Geo {
         return distance(loc1.entity.getCenter(), loc2.entity.getCenter());
     }
 
-    public static HashMap<String, LatLon> centerOfMass(HashMap<String, ArrayList<Location>> country) {
-        HashMap<String, LatLon> output = new HashMap<>();
+    public static double centerOfMass(Agglomerations agglomerations, HashMap<String, ArrayList<Location>> country) {
+        HashMap<String, LatLon> center = new HashMap<>();
         for (AgglomerationList city : AgglomerationList.values()) {
             ArrayList<Location> locationArrayList = country.get(city.getCityName());
             int length = locationArrayList.size();
@@ -43,9 +43,13 @@ public class Geo {
                 lat += latLon.getLat();
                 lon += latLon.getLon();
             }
-            output.put(city.getCityName(), new LatLon(lat / length, lon / length));
+            center.put(city.getCityName(), new LatLon(lat / length, lon / length));
         }
-        return output;
+
+        double totalDistance = 0.0;
+        for (City city : agglomerations.cities)
+            totalDistance = distance(city.entity.getCenter(), center.get(city.name));
+        return totalDistance;
     }
 
     public static double minCityDistanceHeuristic(Agglomerations agglomerations, HashMap<String, ArrayList<Location>> country) {
