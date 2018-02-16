@@ -46,7 +46,7 @@ public class Geo {
         return output;
     }
 
-    public static HashMap<String, double> minCityDistanceHeuristic(HashMap<String, ArrayList<Location>> country) {
-        return null;
+    public static double minCityDistanceHeuristic(HashMap<String, ArrayList<Location>> country) {
+        return 0.0;
     }
 }
