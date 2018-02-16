@@ -8,6 +8,7 @@ public class Agglomerations {
     public ArrayList<City> cities;
     public HashMap<String, City> citiesLookUp;
     public int totalPopulation;
+    public int totalChargers;
 
     public Agglomerations() {
         cities = new ArrayList<>();
@@ -18,7 +19,7 @@ public class Agglomerations {
             totalPopulation += city.population;
 
         for(City city : cities)
-            city.setShare((double)city.population / totalPopulation);
+            city.setMaxChargers((double)city.population * totalChargers / totalPopulation);
 
         citiesLookUp = new HashMap<>();
         setCitiesLookUp();

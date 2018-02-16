@@ -2,6 +2,7 @@ package wwp;
 
 import extractor.AgglomerationsExtractor;
 import extractor.CountryLocationsExtractor;
+import solver.RandomLocations;
 import solver.Test;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class Main {
 //        agglomerationsExtractor = new AgglomerationsExtractor(AgglomerationList.CRACOW, agglomerations, locationsKeeper);
 
         agglomerationsExtractor.checkAfterCitiesScan();
-
+        int totalLocalisationsForAgglomeration = locationsKeeper.agglomeration.get(AgglomerationList.WARSAW).size();
         ArrayList<Location> countryLocations = new ArrayList<>();
         CountryLocationsExtractor countryLocationsExtractor = new CountryLocationsExtractor(locationsKeeper, countryLocations);
 
@@ -31,6 +32,7 @@ public class Main {
         //Agglomerations agglomerations;
         //agglomerations.totalChargers = 6000;
         System.out.println(AgglomerationList.getAt(1));
+        RandomLocations randomLocations = new RandomLocations(agglomerations, locationsKeeper, totalLocalisationsForAgglomeration);
 
 //        // Start scanning by implementing the interface
 //        naut.scan(new IOsmonautReceiver() {

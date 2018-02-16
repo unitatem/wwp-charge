@@ -6,7 +6,7 @@ public class City {
 
     public String name;
     public int population;
-    public double share;
+    public double maxChargers;
     public Entity entity;
 
     public City(AgglomerationList name_, int population_) {
@@ -14,8 +14,8 @@ public class City {
         population = population_;
     }
 
-    public void setShare(double share_) {
-        share = share_;
+    public void setMaxChargers(double maxChargers_) {
+        maxChargers = maxChargers_;
     }
 
     public void setEntity(Entity entity_) {
